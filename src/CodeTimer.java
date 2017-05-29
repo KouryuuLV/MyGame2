@@ -25,4 +25,10 @@ public class CodeTimer {
         this.executionTime = 0;
         
     }
+    
+    public long getTime() {
+        
+        return executionTime/100;
+    }
+            
 }

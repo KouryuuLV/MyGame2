@@ -32,8 +32,7 @@ public class Puzzle extends JPanel {
 	//RNG
 	Thread mix = new Thread(new Runnable() {
 		public void run() {
-                        //CodeTimer.StartTimer();
-			mixing = true;
+                        mixing = true;
 			while (mixing) {
 				ArrayList<Integer> possibleMovements = new ArrayList<Integer>();
 				for (Segment s : segments) {
@@ -78,7 +77,6 @@ public class Puzzle extends JPanel {
 					
 					if (done) {
 						started = false;
-                                                //CodeTimer.StopTimer();
 						segments[8].isEmpty = false;
 					}
 				}
