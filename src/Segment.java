@@ -1,10 +1,12 @@
 import java.awt.*;
 
+
 public class Segment {
 	private Puzzle gameInstance;
 	private int ID;
 	private int segmentSize;
 	private Point pos;
+       
 
 	public boolean isEmpty = false;
 
@@ -40,13 +42,14 @@ public class Segment {
 			int x = ((ID <= 2)? ID:
 				(ID <= 5)? (ID-3):(ID-6));
 			int y = (int) Math.ceil((ID/3));
-			g.drawImage(gameInstance.img, pos.x*segmentSize, pos.y*segmentSize, (pos.x+1)*segmentSize, (pos.y+1)*segmentSize, x*segmentSize, y*segmentSize, (x+1)*segmentSize, (y+1)*segmentSize, null);
+			g.drawRect(0, 0, 3*segmentSize, 3*segmentSize + 30);
+                        g.drawImage(gameInstance.img, pos.x*segmentSize, pos.y*segmentSize, (pos.x+1)*segmentSize, (pos.y+1)*segmentSize, x*segmentSize, y*segmentSize, (x+1)*segmentSize, (y+1)*segmentSize, null);
 			g.setColor(new Color(0,0,0));
 			g.drawLine(pos.x*segmentSize+(segmentSize-1), pos.y*segmentSize, pos.x*segmentSize+(segmentSize-1), (pos.y+1)*segmentSize);
 			g.drawLine(pos.x*segmentSize, pos.y*segmentSize+(segmentSize-1), (pos.x+1)*segmentSize, pos.y*segmentSize+(segmentSize-1));
 			g.setColor(new Color(150,150,150, 100));
 			g.drawLine(pos.x*segmentSize, pos.y*segmentSize, pos.x*segmentSize, (pos.y+1)*segmentSize);
-			g.drawLine(pos.x*segmentSize, pos.y*segmentSize, (pos.x+1)*segmentSize, pos.y*segmentSize);
+			g.drawLine(pos.x*segmentSize, pos.y*segmentSize, (pos.x+1)*segmentSize, pos.y*segmentSize);                                          
 		}
 	}
 
@@ -61,4 +64,9 @@ public class Segment {
 	public int getID() {
 		return ID;
 	}
+        
+        
+        
+        
+        
 }

@@ -1,18 +1,35 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-
 import javax.swing.*;
 
 public class Puzzle extends JPanel {
+        private JList scoreList;
+        private DefaultListModel scoreModel;
+        private JButton Test;
+        
 	Segment[] segments;
 	Image img;
-	
+        String highScore;
+        boolean done = false;
+        
 	public boolean started = false;
 	public boolean mixing = false;
-	
-	public Puzzle(Image img) {
+        
+        public void createUserInterface(){
+        scoreModel= new DefaultListModel();
+        scoreList = new JList(scoreModel);
+        }
+        
+        
+            
+        
+        
+	public Puzzle(Image img,String HighScore) {
+                Test = new JButton("Tests");
+                
 		this.img = img;
+                this.highScore = HighScore;
 		//init 9 segments
 		segments = new Segment[9];
 		int segmentSize = img.getWidth(null)/3;
@@ -21,7 +38,7 @@ public class Puzzle extends JPanel {
 			segments[i] = new Segment(this, i, segmentSize);
 		}
 	}
-	
+
 	public void start() {
 		started = true;
 		//Noņem BR segmentu
@@ -57,7 +74,7 @@ public class Puzzle extends JPanel {
 	});
 	
 	//Pārbauda klikšķi un vai iespējams veikt darbību
-	public void onClick(MouseEvent e) {
+	public void onClick(MouseEvent e) {           
 		for (Segment s : segments) {
 			if (s.hitten(e.getPoint())) {
 				Point tmp = s.getPosition();
@@ -65,19 +82,20 @@ public class Puzzle extends JPanel {
 					segments[8].setPosition(tmp);
 					
 					//Pārbauda vai pabeigts
-					boolean done = true;
+					done = true;
 					for (int i = 0; i != 9; i++) {
 						if (segments[i].getPosition().x == ((i <= 2)? i:(i <= 5)? (i-3):(i-6)) && segments[i].getPosition().y == (int) Math.ceil((i/3))) {
-							//System.out.println(i+": :)");
+							//System.out.println(i+": Y");
 						} else {
-							//System.out.println(i+": :(");
+							//System.out.println(i+": N");
 							done = false;
 						}
 					}
 					
 					if (done) {
 						started = false;
-						segments[8].isEmpty = false;
+                                                segments[8].isEmpty = false;
+                                                
 					}
 				}
 			}
@@ -85,12 +103,26 @@ public class Puzzle extends JPanel {
 		repaint();
 	}
 	
+        @Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		for (int i = 0; i != segments.length; i++) {
 			//System.out.print(segments[i].getID()+((i == 2 || i == 5 || i == 8)? "\n-----\n":"|"));
 			segments[i].paint(g);
 		}
+                    // Atainot spēles Top 10
+                    g.setColor(new Color(0,0,0));
+                    g.drawString("Best Time: " + highScore, 350, 50);
+                    
+                    // Atainot rezultatu pec speles pabeigšanas
+                    if (done == true){
+                        g.setColor(new Color(0,0,0));
+                        g.drawString("Apsveicu: " + highScore, 350, 70);
+                    }
+	}
+        
+        public String getHighScore() {
+		return highScore;
 	}
 	
 }
