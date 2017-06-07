@@ -8,6 +8,8 @@ Highscore Part implimented according to BrandonioProductions
 JFrame
 https://www.youtube.com/playlist?list=PLcnfNKaqA7zQAGZEWZuWwonCTEHJ01D6G
 
+http://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html#input
+
 */
 
 import java.awt.event.*;
@@ -22,8 +24,8 @@ public class Main
 {
 	static JFrame frame;
 	static Puzzle puzzle;
-        private int score = 0;
-        private static String HighScore = "";
+        private int score = 2000;
+        private String HighScore = "";
         
         public String GetHighScoreValue()
             {
@@ -42,7 +44,7 @@ public class Main
                 catch (Exception e)
                 {
                     System.out.println(e.getMessage());
-                    return "0";
+                    return "Nobody:0";
                 }
 
                 finally 

@@ -1,6 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Puzzle extends JPanel {
@@ -11,6 +17,7 @@ public class Puzzle extends JPanel {
 	Segment[] segments;
 	Image img;
         String highScore;
+        int score = 2000;
         boolean done = false;
         
 	public boolean started = false;
@@ -95,6 +102,8 @@ public class Puzzle extends JPanel {
 					if (done) {
 						started = false;
                                                 segments[8].isEmpty = false;
+                                                checkScore10();
+                                                System.out.println(highScore);
                                                 
 					}
 				}
@@ -124,5 +133,49 @@ public class Puzzle extends JPanel {
         public String getHighScore() {
 		return highScore;
 	}
+        
+        
+        public void checkScore10(){
+            
+            if (score < Integer.parseInt((highScore.split(":")[1]))){
+                
+                // Ja ir uzstādīts labāks laiks
+                String name = JOptionPane.showInputDialog("Apsveicu ar uzstādīto Laiku. Lūdzu ievadiet savu vārdu.");
+                highScore = name + ":" + score;
+                
+                File scoreFile = new File("src/highscore.txt");
+                if (!scoreFile.exists()){
+                    try {
+                        scoreFile.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Puzzle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            
+                FileWriter writeFile = null;
+                BufferedWriter writer = null;
+                //System.out.println("kluda write1");
+                try{
+                    writeFile = new FileWriter(scoreFile);
+                    writer = new BufferedWriter(writeFile);
+                    writer.write(this.highScore);
+                    //System.out.println("kluda write2");
+                }
+                catch (Exception e){
+                    //System.out.println("kluda write3");
+                }
+                finally{
+                    if (writer != null)
+                        try {
+                            writer.close();
+                            //System.out.println("kluda write4");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Puzzle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+                
+            
+        }
 	
 }
